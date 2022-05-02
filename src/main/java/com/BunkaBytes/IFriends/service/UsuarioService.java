@@ -1,5 +1,7 @@
 package com.BunkaBytes.IFriends.service;
 
+import java.util.Optional;
+
 import com.BunkaBytes.IFriends.model.entity.Usuario;
 
 public interface UsuarioService {
@@ -9,5 +11,7 @@ public interface UsuarioService {
 	Usuario salvarUsuario(Usuario usuario);
 	
 	void validarEmail(String email);
+	
+	Optional<Usuario> obterPorId(Long id);
 	
 }

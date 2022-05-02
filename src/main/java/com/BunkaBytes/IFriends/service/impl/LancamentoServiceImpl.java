@@ -3,6 +3,7 @@ package com.BunkaBytes.IFriends.service.impl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.BunkaBytes.IFriends.exception.RegraNegocioException;
 import com.BunkaBytes.IFriends.model.entity.Lancamento;
 import com.BunkaBytes.IFriends.model.enums.StatusLancamento;
+import com.BunkaBytes.IFriends.model.enums.TipoLancamento;
 import com.BunkaBytes.IFriends.model.repository.LancamentoRepository;
 import com.BunkaBytes.IFriends.service.LancamentoService;
 
@@ -92,6 +94,28 @@ public class LancamentoServiceImpl implements LancamentoService{
 		if(lancamento.getTipo() == null) {
 			throw new RegraNegocioException("Informe um tipo de lançamento.");
 		}
+	}
+
+	@Override
+	public Optional<Lancamento> obterPorId(Long id) {
+		
+		return repository.findById(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public BigDecimal obterSaldoPorUsuario(Long id) {
+		
+		BigDecimal receber = repository.obterSaldoPorTipoLancamentoEUsuario(id, TipoLancamento.RECEITA);
+		BigDecimal pagar = repository.obterSaldoPorTipoLancamentoEUsuario(id, TipoLancamento.DESPESA);
+		
+		if(receber == null) {
+			receber = BigDecimal.ZERO;
+		}
+		if(pagar == null) {
+			pagar = BigDecimal.ZERO;
+		}
+		return receber.subtract(pagar);
 	}
 	
 }
