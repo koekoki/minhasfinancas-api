@@ -21,7 +21,7 @@ import com.BunkaBytes.IFriends.service.impl.UsuarioServiceImpl;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("dev")
+@ActiveProfiles("teste")
 public class UsuarioServiceTest {
 	
 	@SpyBean
@@ -67,6 +67,7 @@ public class UsuarioServiceTest {
 	@Test
 	public void naoDeveSalvarUmUsuarioComEmailJaCadastrado() {
 		Assertions.assertThrows(RegraNegocioException.class, () -> {
+			
 		//cenário
 		String email = "email@email.com";
 		Usuario usuario = Usuario.builder().email(email).build();
@@ -84,6 +85,7 @@ public class UsuarioServiceTest {
 	@Test
 	public void deveAutenticarUmUsuarioComSucesso() {
 		Assertions.assertDoesNotThrow(()-> {
+			
 		//cenário
 		String email = "kaiky.br34@gmail.com";
 		String senha = "bunka413";

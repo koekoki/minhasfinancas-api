@@ -71,7 +71,7 @@ public class LancamentoServiceImpl implements LancamentoService{
 	@Override
 	public void validar(Lancamento lancamento) {
 		
-		if(lancamento.getDescricao() == null || lancamento.getDescricao().trim().equals(null)) {
+		if(lancamento.getDescricao() == null || lancamento.getDescricao().trim().equals("")) {
 			throw new RegraNegocioException("Informe uma descrição valida.");
 		}
 		
